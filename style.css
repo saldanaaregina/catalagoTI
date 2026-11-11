@@ -123,3 +123,21 @@ footer {
     margin-top: 2rem;
     font-size: 0.9rem;
 }
+
+.card label{
+    cursor: pointer;
+    display: block;
+}
+
+.card input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.2);  
+}
+
+.precio{
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #28a745;
+    margin: 0.5rem 0;
+    display: block;
+}

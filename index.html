@@ -10,49 +10,61 @@
 
     <header>
         <div class="container">
-            <h1>Solutions TI</h1>
-            <p>Catálogo de Servicios y Soporte Especializado</p>
+            <h1>TechSolutions TI</h1>
+            <p>Portal de Cotización y Solicitudes de Servicio (SR)</p>
         </div>
     </header>
 
     <main class="container">
         <section class="intro">
-            <h2>Bienvenido a nuestro portal de servicios</h2>
-            <p>Aquí presentamos nuestras propuestas de valor enfocadas en optimizar los sistemas de información de las organizaciones, respaldadas por niveles de calidad (SLA).</p>
+            <h2>Selecciona los servicios requeridos</h2>
+            <p>Marca las casillas de los servicios que necesitas para tu organización. El sistema calculará el costo total y el SLA estimado en tiempo real.</p>
         </section>
 
         <section class="catalogo">
-            <h2>Catálogo de Servicios de TI</h2>
-            
-            <div class="grid-servicios">
-                <div class="card">
-                    <h3>Desarrollo de Software Web</h3>
-                    <p>Creación de aplicaciones a la medida utilizando frameworks modernos y bases de datos optimizadas.</p>
-                    <span class="sla high">Prioridad: Alta (SLA 99.9%)</span>
-                    <button onclick="solicitarServicio('Desarrollo Web')">Solicitar</button>
+            <form id="formCotizacion">
+                <div class="grid-servicios">
+                    <div class="card">
+                        <label>
+                            <input type="checkbox" name="servicio" value="Desarrollo de Software Web" data-precio="15000" data-sla="SLA 99.9% (Alta)">
+                            <h3>Desarrollo de Software Web</h3>
+                        </label>
+                        <p>Creación de aplicaciones a la medida.</p>
+                        <span class="precio">$15,000 MXN</span>
+                        <span class="sla high">SLA: 99.9%</span>
+                    </div>
+
+                    <div class="card">
+                        <label>
+                            <input type="checkbox" name="servicio" value="Póliza de Soporte Técnico" data-precio="4500" data-sla="SLA 24 hrs (Media)">
+                            <h3>Póliza de Soporte Técnico</h3>
+                        </label>
+                        <p>Mantenimiento preventivo y correctivo.</p>
+                        <span class="precio">$4,500 MXN</span>
+                        <span class="sla medium">SLA: 24 hrs</span>
+                    </div>
+
+                    <div class="card">
+                        <label>
+                            <input type="checkbox" name="servicio" value="Consultoría en Seguridad" data-precio="9000" data-sla="SLA Crítico (Alta)">
+                            <h3>Consultoría en Seguridad</h3>
+                        </label>
+                        <p>Auditoría de vulnerabilidades y respaldos.</p>
+                        <span class="precio">$9,000 MXN</span>
+                        <span class="sla high">SLA: Crítico</span>
+                    </div>
                 </div>
 
-                <div class="card">
-                    <h3>Póliza de Soporte Técnico</h3>
-                    <p>Mantenimiento preventivo y correctivo para equipos de cómputo e infraestructura de red.</p>
-                    <span class="sla medium">Prioridad: Media (SLA 24 hrs)</span>
-                    <button onclick="solicitarServicio('Soporte Técnico')">Solicitar</button>
+                <div style="margin-top: 2rem; text-align: center;">
+                    <button type="button" class="btn-principal" onclick="calcularSolicitud()">Generar Solicitud y Cotización (SR)</button>
                 </div>
-
-                <div class="card">
-                    <h3>Consultoría en Seguridad Informática</h3>
-                    <p>Auditoría de vulnerabilidades y respaldo de datos críticos para la continuidad del negocio.</p>
-                    <span class="sla high">Prioridad: Alta (SLA Crítico)</span>
-                    <button onclick="solicitarServicio('Seguridad Informática')">Solicitar</button>
-                </div>
-            </div>
+            </form>
         </section>
 
-        <section class="interactivo">
-            <h2>Registro de Solicitudes (SR)</h2>
-            <p>Haz clic en el botón de abajo para simular el envío de una solicitud de servicio.</p>
-            <button id="btnAlerta" class="btn-principal">Verificar Estado del Sistema</button>
-            <p id="mensajeEstado" style="margin-top: 15px; font-weight: bold; color: #0056b3;"></p>
+        <section class="interactivo" id="seccionResultado" style="display: none;">
+            <h2>Resumen de la Solicitud de Servicio (SR)</h2>
+            <div id="ticketResumen" style="background: #f9f9f9; padding: 15px; border-radius: 5px; border-left: 4px solid #28a745;">
+            </div>
         </section>
     </main>
 
@@ -61,13 +73,42 @@
     </footer>
 
     <script>
-        function solicitarServicio(nombreServicio) {
-            alert("¡Has seleccionado el servicio: " + nombreServicio + "!\nSe generará una Solicitud de Servicio (SR) en el sistema.");
-        }
+        function calcularSolicitud() {
+            const checkboxes = document.querySelectorAll('input[name="servicio"]:checked');
+            const seccionResultado = document.getElementById('seccionResultado');
+            const ticketResumen = document.getElementById('ticketResumen');
 
-        document.getElementById('btnAlerta').addEventListener('click', function() {
-            document.getElementById('mensajeEstado').innerText = "✔ Sistema operando con normalidad. Base de datos conectada correctamente.";
-        });
+            if (checkboxes.length === 0) {
+                alert("Por favor selecciona al menos un servicio para generar la solicitud.");
+                seccionResultado.style.display = "none";
+                return;
+            }
+
+            let total = 0;
+            let listaHtml = "<ul>";
+
+            checkboxes.forEach((checkbox) => {
+                let nombre = checkbox.value;
+                let precio = parseFloat(checkbox.getAttribute('data-precio'));
+                let sla = checkbox.getAttribute('data-sla');
+                
+                total += precio;
+                listaHtml += `<li><strong>${nombre}</strong> - $${precio.toLocaleString()} MXN (${sla})</li>`;
+            });
+
+            listaHtml += "</ul>";
+
+            ticketResumen.innerHTML = `
+                <p><strong>Folio de Solicitud (SR):</strong> #SR-2026-${Math.floor(Math.random() * 900 + 100)}</p>
+                <p><strong>Servicios seleccionados:</strong></p>
+                ${listaHtml}
+                <hr style="margin: 10px 0; border: 0; border-top: 1px solid #ddd;">
+                <p style="font-size: 1.1rem; color: #28a745;"><strong>Costo Total Estimado: $${total.toLocaleString()} MXN</strong></p>
+                <p style="font-size: 0.85rem; color: #666; margin-top: 5px;">Estado: Procesado correctamente y enrutado al catálogo de niveles de calidad (SLA).</p>
+            `;
+
+            seccionResultado.style.display = "block";
+        }
     </script>
 
 </body>
