@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Servicios de TI - FACPYA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Solutions TI</h1>
+            <p>Catálogo de Servicios y Soporte Especializado</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro">
+            <h2>Bienvenido a nuestro portal de servicios</h2>
+            <p>Aquí presentamos nuestras propuestas de valor enfocadas en optimizar los sistemas de información de las organizaciones, respaldadas por niveles de calidad (SLA).</p>
+        </section>
+
+        <section class="catalogo">
+            <h2>Catálogo de Servicios de TI</h2>
+            
+            <div class="grid-servicios">
+                <div class="card">
+                    <h3>Desarrollo de Software Web</h3>
+                    <p>Creación de aplicaciones a la medida utilizando frameworks modernos y bases de datos optimizadas.</p>
+                    <span class="sla high">Prioridad: Alta (SLA 99.9%)</span>
+                    <button onclick="solicitarServicio('Desarrollo Web')">Solicitar</button>
+                </div>
+
+                <div class="card">
+                    <h3>Póliza de Soporte Técnico</h3>
+                    <p>Mantenimiento preventivo y correctivo para equipos de cómputo e infraestructura de red.</p>
+                    <span class="sla medium">Prioridad: Media (SLA 24 hrs)</span>
+                    <button onclick="solicitarServicio('Soporte Técnico')">Solicitar</button>
+                </div>
+
+                <div class="card">
+                    <h3>Consultoría en Seguridad Informática</h3>
+                    <p>Auditoría de vulnerabilidades y respaldo de datos críticos para la continuidad del negocio.</p>
+                    <span class="sla high">Prioridad: Alta (SLA Crítico)</span>
+                    <button onclick="solicitarServicio('Seguridad Informática')">Solicitar</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="interactivo">
+            <h2>Registro de Solicitudes (SR)</h2>
+            <p>Haz clic en el botón de abajo para simular el envío de una solicitud de servicio.</p>
+            <button id="btnAlerta" class="btn-principal">Verificar Estado del Sistema</button>
+            <p id="mensajeEstado" style="margin-top: 15px; font-weight: bold; color: #0056b3;"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Elaborado por: Regina Benigbe Saldaña Camarillo | UANL - FACPYA (2026)</p>
+    </footer>
+
+    <script>
+        function solicitarServicio(nombreServicio) {
+            alert("¡Has seleccionado el servicio: " + nombreServicio + "!\nSe generará una Solicitud de Servicio (SR) en el sistema.");
+        }
+
+        document.getElementById('btnAlerta').addEventListener('click', function() {
+            document.getElementById('mensajeEstado').innerText = "✔ Sistema operando con normalidad. Base de datos conectada correctamente.";
+        });
+    </script>
+
+</body>
+</html>
